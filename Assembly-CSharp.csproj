@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{C8AA4EFB-66FE-FA73-A539-47B9F85FFE96}</ProjectGuid>
+	<ProjectGuid>{63F499A9-F757-7CFB-3C77-9A60075EED1B}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -46,8 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Chunk.cs" />
-     <None Include="Assets\chunk_shader.shader" />
+     <Compile Include="Assets\Scripts\Actor.cs" />
+     <Compile Include="Assets\Scripts\Chunk.cs" />
+     <Compile Include="Assets\Scripts\World.cs" />
+     <None Include="Assets\Shaders\chunk_shader.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
