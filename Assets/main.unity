@@ -390,6 +390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: b8e90deb0d8b7cc45a34789d035fceb8, type: 2}
+  camera: {fileID: 1605001022}
+  anim_magnitude: 0
 --- !u!4 &1755895613
 Transform:
   m_ObjectHideFlags: 0

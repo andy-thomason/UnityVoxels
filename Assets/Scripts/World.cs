@@ -14,7 +14,56 @@ public class World : MonoBehaviour {
 	Chunk[] chunks = new Chunk[xdim*ydim*zdim];
 	public Material world_material;
 
-	public Chunk get_chunk(int ci, int cj, int ck) {
+	// rx + l nx = cx -> l = (cx - rx) / nx
+
+	/*public bool RayCast(Vector3 origin, Vector3 direction, float max_distance, out int oi, out int oj, out int ok) {
+		float rx = origin.x;
+		float ry = origin.y;
+		float rz = origin.z;
+		int di = (direction.x >= 0 ? 1 : -1);
+		int dj = (direction.y >= 0 ? 1 : -1);
+		int dk = (direction.z >= 0 ? 1 : -1);
+		float denomx = Mathf.Abs(direction.x);
+		float denomy = Mathf.Abs(direction.y);
+		float denomz = Mathf.Abs(direction.z);
+        int i = Mathf.FloorToInt (rx);
+		int j = Mathf.FloorToInt (ry);
+		int k = Mathf.FloorToInt (rz);
+		int ci = i >> Chunk.lg_xdim;
+		int cj = j >> Chunk.lg_ydim;
+		int ck = k >> Chunk.lg_zdim;
+		int qi = i & (Chunk.xdim-1);
+		int qj = j & (Chunk.ydim-1);
+		int qk = k & (Chunk.zdim-1);
+
+		Chunk ch = get_chunk (i, j, k);
+		if (ch.GetValue (qi, qj, qk)) {
+			oi = i;
+			oj = j;
+			ok = k;
+			return true;
+        }
+
+		float numerx = i + di - rx;
+		float numery = j + dj - ry;
+        float numerz = k + dk - rz;
+
+		if (numerx * denomy < numery * denomx && numerx * denomz < numerz * denomx) {
+			rx = i += di;
+			ry += direction.y * (numerx / denomx);
+			rz += direction.z * (numerx / denomx);
+		} else if (numery * denomz < numerz * denomy) {
+			ry = j += dj;
+			rx += direction.x * (numery / denomy);
+			rz += direction.z * (numery / denomy);
+		} else {
+			rz = k += dk;
+			rx += direction.x * (numerz / denomz);
+			ry += direction.y * (numerz / denomz);
+        }
+    }*/
+    
+    public Chunk get_chunk(int ci, int cj, int ck) {
 		int idx = (ck * ydim + cj) * xdim + ci;
 		return chunks [idx];
 	}

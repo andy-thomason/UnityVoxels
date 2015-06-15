@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\World.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\bioblox\PDB_unity\Assets\Shaders\PDB.shader">
     <Files>
-      <File FileName="Assets\Scripts\Chunk.cs" Line="161" Column="1" />
-      <File FileName="Assets\Scripts\World.cs" Line="25" Column="27" />
+      <File FileName="..\bioblox\PDB_unity\Assets\Scripts\PDB_molecule.cs" Line="681" Column="33" />
+      <File FileName="..\bioblox\PDB_unity\Assets\Shaders\PDB.shader" Line="191" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

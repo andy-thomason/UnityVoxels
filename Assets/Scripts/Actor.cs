@@ -98,7 +98,14 @@ public class Actor : MonoBehaviour {
 	GameObject rarm;
 	GameObject lleg;
 	GameObject rleg;
+	public GameObject camera;
 	int anim_time = 0;
+
+	public float speed = 0;
+	public float strafe = 0;
+	public float updown_look = 0;
+	public float leftright_look = 0;
+	public float y_velocity;
 
 
 	// Use this for initialization
@@ -120,19 +127,71 @@ public class Actor : MonoBehaviour {
 		rleg.transform.Translate (new Vector3 (5.0f * scale, 8.0f * scale, 0));
 
 		body.transform.Rotate (new Vector3 (0, 180, 0));
+
+		// disable the cursor
+		Cursor.visible = false;
+		//Cursor.lockState = CursorLockMode.Locked;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//transform.Translate(transform.localToWorldMatrix.GetColumn(2)*0.1f);
-		float val = Mathf.Sin (anim_time * 0.1f);
+		float tdt = Time.deltaTime;
+		if (Input.GetKey (KeyCode.W)) {
+			speed += tdt * 2;
+		} else if (Input.GetKey (KeyCode.S)) {
+			speed -= tdt * 2;
+		} else {
+			speed *= Mathf.Exp(-tdt*5);
+		}
+		if (Input.GetKey (KeyCode.A)) {
+			strafe -= tdt * 2;
+		} else if (Input.GetKey (KeyCode.D)) {
+			strafe += tdt * 2;
+		} else {
+			strafe *= Mathf.Exp(-tdt*5);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			y_velocity = 4;
+		} else {
+			y_velocity -= 9.8f * tdt;
+		}
+
+		speed = Mathf.Clamp(speed, -1, 1);
+		strafe = Mathf.Clamp(strafe, -1, 1);
+
+		leftright_look += Input.GetAxis ("Mouse X") * 10;
+		updown_look -= Input.GetAxis ("Mouse Y") * 10;
+
+		// track mouse movment
+		transform.rotation = new Quaternion (0, Mathf.Sin (leftright_look*(Mathf.PI/360)), 0, Mathf.Cos (leftright_look*(Mathf.PI/360)));
+		updown_look = Mathf.Clamp (updown_look, -90, 90);
+
+		Vector3 fwd = new Vector3 (Mathf.Sin (leftright_look * (Mathf.PI / 180)), 0, Mathf.Cos (leftright_look * (Mathf.PI / 180)));
+		Vector3 right = new Vector3 (Mathf.Cos (leftright_look * (Mathf.PI / 180)), 0, -Mathf.Sin (leftright_look * (Mathf.PI / 180)));
+		Vector3 up = new Vector3 (0, 1, 0);
+
+		transform.position += fwd * speed * tdt * 10.0f + right * strafe * tdt * 10.0f + up * y_velocity * tdt;
+		if (transform.position.y < 5) {
+			transform.position = new Vector3(transform.position.x, 5, transform.position.z);
+			y_velocity = 0;
+		}
+
+		if (camera != null) {
+			//camera.transform.position = transform.position + new Vector3(0, 1.75f, 0) - fwd * 2.0f;
+			camera.transform.position = transform.position + new Vector3(0, 1.75f, 0) + fwd * 0.3f;
+			camera.transform.rotation = transform.rotation;
+			//Debug.Log(transform.rotation + " " + fwd);
+			camera.transform.Rotate(new Vector3(updown_look, 0, 0));
+		}
+
+		// animation
+		float val = Mathf.Sin (anim_time * 0.1f) * (speed + strafe);
 		larm.transform.localRotation = new Quaternion (Mathf.Sin (val), 0, 0, Mathf.Cos (val));
 		rarm.transform.localRotation = new Quaternion (-Mathf.Sin (val), 0, 0, Mathf.Cos (val));
 		lleg.transform.localRotation = new Quaternion (-Mathf.Sin (val*0.5f), 0, 0, Mathf.Cos (val*0.5f));
 		rleg.transform.localRotation = new Quaternion (Mathf.Sin (val*0.5f), 0, 0, Mathf.Cos (val*0.5f));
+		head.transform.localRotation = new Quaternion (-Mathf.Sin (updown_look*(Mathf.PI/360)), 0, 0, Mathf.Cos (updown_look*(Mathf.PI/360)));
 		anim_time++;
-		//head.transform.Rotate(new Vector3(10.0f, 0, 0));
-		//body.transform.Rotate(new Vector3(10.0f, 0, 0));
-		//larm.transform.Rotate(new Vector3(10.0f, 0, 0));
 	}
 }
